@@ -1,11 +1,10 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Biblioteka {
-
+	
 	private static Scanner input = new Scanner (System.in);
 	
 	public static void main(String[] args) {
@@ -18,17 +17,24 @@ public class Biblioteka {
 		
 		System.out.println("--------------------------------------------------------");
 		System.out.println("Odaberite zeljenu akciju: \n1.Kreiranje racuna \n2.Kreiranje knjige \n3.Podizanje knjige \n4.Vracanje knjige \n5.Ispis detalja racuna \n6.Ispis zapisnika ");
+		System.out.println("--------------------------------------------------------");
+		
 		
 		int inputValue = 0;
 		
+		while (true)
 		try {
 			inputValue = input.nextInt();
 			
-			if (inputValue != 1 && inputValue != 2 && inputValue != 3 && inputValue != 4 && inputValue != 5 && inputValue != 6)
+			if (inputValue != 1 && inputValue != 2 && inputValue != 3 && inputValue != 4 && inputValue != 5 && inputValue != 6) 
 				throw new InputMismatchException();
-			
+				
+				break;
+				
 		} catch(Exception e) {
+			input.nextLine();
 			System.out.println("Molimo vas da unesete valjan unos opcije! ");
+			continue;
 		}
 		
 		switch (inputValue) {
@@ -44,17 +50,16 @@ public class Biblioteka {
 	}
 	
 	public static void kreiranjeRacuna() {
-		
-		
-		
+	
 		int brojRacuna = 0;
 		int brojPodignutihKnjiga = 0;
 		
 		System.out.println("Unesite broj racuna: ");
 		brojRacuna = unosIntegera();
-		
+
+		input.nextLine();
 		System.out.println("Unesite ime musterije: ");
-		String imeMusterije = input.next();
+		String imeMusterije = input.nextLine();
 		
 		new Racun(brojRacuna, imeMusterije, brojPodignutihKnjiga);
 		
@@ -67,8 +72,9 @@ public class Biblioteka {
         System.out.println("Unesite broj knjige: ");
 		int brojKnjige = unosIntegera();
 		
+		input.nextLine();
 		System.out.println("Unesite ime knjige: ");
-		String imeKnjige = input.next();
+		String imeKnjige = input.nextLine();
 		
 		new Knjiga(brojKnjige, imeKnjige, false);
 		
@@ -100,7 +106,7 @@ public class Biblioteka {
 		System.out.println("Unesite broj knjige: ");
 		brojKnjige = unosIntegera();
 		
-		Knjiga.podizanjeKnjige(brojRacuna, brojKnjige, new Date());
+		Knjiga.vracanjeKnjige(brojRacuna, brojKnjige, new Date());
 		
 		glavniMenu();
 		
@@ -120,6 +126,8 @@ public class Biblioteka {
 	
 	public static void ispisZapisnika() {
 	
+		System.out.println(Zapisnik.ispisiZapisnik());
+		
 		glavniMenu();
 		
 	}
@@ -134,6 +142,7 @@ public class Biblioteka {
 			break;
 		} catch (Exception e) {
 			System.out.println("Unesite ispravan unos!");
+			input.nextLine();
 			continue;
 		}
 		

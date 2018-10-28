@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
-public class Racun {
+public class Racun extends Zapisnik {
 
 	private int brojRacuna;
 	private String imeMusterije;
 	private int brojPosudenihKnjiga;
 	
+	private static Zapisnik zapisnik = new Zapisnik();
 	private static ArrayList<Racun> racuni = new ArrayList<Racun>();
 	
 	public Racun() {
@@ -22,6 +23,8 @@ public class Racun {
 			
 			racuni.add(this);
 			
+			zapisnik.zapisiKreacijuRacuna(brojRacuna, imeMusterije);
+
 			System.out.println("Racun je uspjesno kreiran!");
 			
 		}
@@ -73,6 +76,10 @@ public class Racun {
 
 	public void setBrojPosudenihKnjiga(int brojPosudenihKnjiga) {
 		this.brojPosudenihKnjiga = brojPosudenihKnjiga;
+	}
+	
+	public String getImeMusterije() {
+		return imeMusterije;
 	}
 	
 	

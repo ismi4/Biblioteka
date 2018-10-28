@@ -3,12 +3,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Knjiga {
+public class Knjiga extends Zapisnik {
 
 	private int brojKnjige;
 	private String imeKnjige;
 	private boolean statusKnjige;
 	
+	private static Zapisnik zapisnik = new Zapisnik();
 	private static ArrayList<Knjiga> knjige = new ArrayList<Knjiga>();
 	
 	public Knjiga() {
@@ -24,6 +25,8 @@ public class Knjiga {
 			this.statusKnjige = statusKnjige;
 			
 			knjige.add(this);
+			
+			zapisnik.zapisiKreacijuKnjige(brojKnjige, imeKnjige);
 			
 			System.out.println("Knjiga je uspjesno kreirana!");
 			
@@ -61,6 +64,8 @@ public class Knjiga {
 			Knjiga.getKnjiga(brojKnjige).statusKnjige = true;
 			Racun.getRacun(brojRacuna).setBrojPosudenihKnjiga(Racun.getRacun(brojRacuna).getBrojPosudenihKnjiga() + 1);
 			System.out.println("Knjiga je uspjesno podignuta!");
+			
+			zapisnik.zapisiPodizanjeKnjige(brojKnjige, Knjiga.getKnjiga(brojKnjige).imeKnjige, brojRacuna, Racun.getRacun(brojRacuna).getImeMusterije(), datumPodizanjaString);
 			
 		}
 			
@@ -113,13 +118,15 @@ public class Knjiga {
 	public static void vracanjeKnjige(int brojRacuna, int brojKnjige, Date datumVracanja) {
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		String datumPodizanjaString = dateFormat.format(datumVracanja);
+		String datumVracanjaString = dateFormat.format(datumVracanja);
 		
 		if (provjeraZaVracanjeKnjige(brojRacuna, brojKnjige)) {
 			
 			Knjiga.getKnjiga(brojKnjige).statusKnjige = false;
 			Racun.getRacun(brojRacuna).setBrojPosudenihKnjiga(Racun.getRacun(brojRacuna).getBrojPosudenihKnjiga() - 1);
 			System.out.println("Knjiga je uspjesno vracena!");
+			
+			zapisnik.zapisiVracanjeKnjige(brojKnjige, Knjiga.getKnjiga(brojKnjige).imeKnjige, brojRacuna, Racun.getRacun(brojRacuna).getImeMusterije(), datumVracanjaString);
 			
 		}
 			
@@ -152,5 +159,7 @@ public class Knjiga {
 		
 		
 	}
+	
+	
 	
 }
