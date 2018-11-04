@@ -1,19 +1,45 @@
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Racun extends Zapisnik {
+public class Racun extends Zapisnik implements Serializable {
 
 	private int brojRacuna;
 	private String imeMusterije;
 	private int brojPosudenihKnjiga;
+	private static File racuniLog;
 	
 	private static Zapisnik zapisnik = new Zapisnik();
 	private static ArrayList<Racun> racuni = new ArrayList<Racun>();
+	
+	public static void loading () {
+
+		try {
+			FileInputStream in = new FileInputStream("racuni.txt");
+			ObjectInputStream oin = new ObjectInputStream(in);
+
+			while (true) 
+				racuni.add((Racun)oin.readObject());
+
+
+		} catch (EOFException ex) {}
+		catch (FileNotFoundException e) {racuniLog = new File ("racuni.txt");}
+		catch (Exception e) {}
+	}
+
 	
 	public Racun() {
 		
 	}
 	
-	public Racun(int brojRacuna, String imeMusterije, int brojPosudenihKnjiga) {
+	public Racun(int brojRacuna, String imeMusterije, int brojPosudenihKnjiga) throws IOException {
 		
 		if (provjeraZaKreacijuRacuna(brojRacuna)) {
 			
@@ -24,6 +50,15 @@ public class Racun extends Zapisnik {
 			racuni.add(this);
 			
 			zapisnik.zapisiKreacijuRacuna(brojRacuna, imeMusterije);
+			
+			try {
+				FileOutputStream in = new FileOutputStream("racuni.txt");
+				ObjectOutputStream oin = new ObjectOutputStream(in);
+				oin.writeObject(this);
+			}
+			catch(IOException ex){
+				System.out.println("Greska pri zapisivanju objekta!");
+			}
 
 			System.out.println("Racun je uspjesno kreiran!");
 			

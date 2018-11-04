@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -7,13 +8,16 @@ public class Biblioteka {
 	
 	private static Scanner input = new Scanner (System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
+		Knjiga.loading();
+		Racun.loading();
 		glavniMenu();
+		
 		
 	}
 	
-	public static void glavniMenu() {
+	public static void glavniMenu() throws IOException {
 		
 		System.out.println("--------------------------------------------------------");
 		System.out.println("Odaberite zeljenu akciju: \n1.Kreiranje racuna \n2.Kreiranje knjige \n3.Podizanje knjige \n4.Vracanje knjige \n5.Ispis detalja racuna \n6.Ispis zapisnika ");
@@ -49,7 +53,7 @@ public class Biblioteka {
 		
 	}
 	
-	public static void kreiranjeRacuna() {
+	public static void kreiranjeRacuna() throws IOException {
 	
 		int brojRacuna = 0;
 		int brojPodignutihKnjiga = 0;
@@ -67,7 +71,7 @@ public class Biblioteka {
 		
 	}
 
-	public static void kreiranjeKnjige() {
+	public static void kreiranjeKnjige() throws IOException {
 		
         System.out.println("Unesite broj knjige: ");
 		int brojKnjige = unosIntegera();
@@ -81,7 +85,7 @@ public class Biblioteka {
 		glavniMenu();
 	}
 	
-	public static void podizanjeKnjige() {
+	public static void podizanjeKnjige() throws IOException {
 		
 		System.out.println("Unesite vas broj racuna: ");
 		int brojRacuna = unosIntegera();
@@ -95,7 +99,7 @@ public class Biblioteka {
 		
 	}
 	
-	public static void vracanjeKnjige() {
+	public static void vracanjeKnjige() throws IOException {
 		
 		int brojRacuna = 0;
 		int brojKnjige = 0;
@@ -112,7 +116,7 @@ public class Biblioteka {
 		
 	}
 	
-	public static void ispisRacuna() {
+	public static void ispisRacuna() throws IOException {
 		
 		int brojRacuna = 0;
 		
@@ -124,7 +128,7 @@ public class Biblioteka {
 		glavniMenu();
 	}
 	
-	public static void ispisZapisnika() {
+	public static void ispisZapisnika() throws IOException {
 	
 		System.out.println(Zapisnik.ispisiZapisnik());
 		
