@@ -1,7 +1,6 @@
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Knjiga extends Zapisnik implements Serializable {
 
 	private int brojKnjige;
@@ -20,19 +20,21 @@ public class Knjiga extends Zapisnik implements Serializable {
 
 	private static Zapisnik zapisnik = new Zapisnik();
 	private static ArrayList<Knjiga> knjige = new ArrayList<Knjiga>();
-	private static File knjigeLog;
-
+	
 	public static void loading () {
 
 		try {
-			FileInputStream in = new FileInputStream("knjige.txt");
+			
+			File f = new File ("knjige.txt");
+			
+			FileInputStream in = new FileInputStream(f);
+			@SuppressWarnings("resource")
 			ObjectInputStream oin = new ObjectInputStream(in);
 
 			while (true) 
 				knjige.add((Knjiga)oin.readObject());
-
+			
 		} catch (EOFException ex) {}
-		catch (FileNotFoundException e) {knjigeLog = new File ("knjige.txt");}
 		catch (Exception e) {}
 	}
 
@@ -51,17 +53,6 @@ public class Knjiga extends Zapisnik implements Serializable {
 			knjige.add(this);
 
 			zapisnik.zapisiKreacijuKnjige(brojKnjige, imeKnjige);
-
-			try {
-				FileOutputStream in = new FileOutputStream("knjige.txt");
-				ObjectOutputStream oin = new ObjectOutputStream(in);
-				oin.writeObject(this);
-				System.out.println("Dod knjig");
-			}
-			catch(IOException ex){
-				System.out.println("Greska pri zapisivanju objekta!");
-			}
-
 
 			System.out.println("Knjiga je uspjesno kreirana!");
 
@@ -193,6 +184,16 @@ public class Knjiga extends Zapisnik implements Serializable {
 		return true;
 
 
+	}
+	
+	public static void save() throws IOException {
+		FileOutputStream in = new FileOutputStream("knjige.txt");
+		ObjectOutputStream oin = new ObjectOutputStream(in);
+
+		for (int i = 0; i < knjige.size(); i++) 
+			oin.writeObject(knjige.get(i));
+		
+		oin.close();
 	}
 
 

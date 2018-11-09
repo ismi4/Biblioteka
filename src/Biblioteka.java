@@ -1,5 +1,5 @@
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,6 +12,7 @@ public class Biblioteka {
 
 		Knjiga.loading();
 		Racun.loading();
+		Zapisnik.loading();
 		glavniMenu();
 		
 		
@@ -20,7 +21,7 @@ public class Biblioteka {
 	public static void glavniMenu() throws IOException {
 		
 		System.out.println("--------------------------------------------------------");
-		System.out.println("Odaberite zeljenu akciju: \n1.Kreiranje racuna \n2.Kreiranje knjige \n3.Podizanje knjige \n4.Vracanje knjige \n5.Ispis detalja racuna \n6.Ispis zapisnika ");
+		System.out.println("Odaberite zeljenu akciju: \n1.Kreiranje racuna \n2.Kreiranje knjige \n3.Podizanje knjige \n4.Vracanje knjige \n5.Ispis detalja racuna \n6.Ispis zapisnika \n7.Zatvaranje aplikacije ");
 		System.out.println("--------------------------------------------------------");
 		
 		
@@ -30,7 +31,7 @@ public class Biblioteka {
 		try {
 			inputValue = input.nextInt();
 			
-			if (inputValue != 1 && inputValue != 2 && inputValue != 3 && inputValue != 4 && inputValue != 5 && inputValue != 6) 
+			if (inputValue != 1 && inputValue != 2 && inputValue != 3 && inputValue != 4 && inputValue != 5 && inputValue != 6 && inputValue != 7) 
 				throw new InputMismatchException();
 				
 				break;
@@ -48,6 +49,7 @@ public class Biblioteka {
 		case 4: vracanjeKnjige(); break;
 		case 5: ispisRacuna(); break;
 		case 6: ispisZapisnika(); break;
+		case 7: Knjiga.save();Racun.save(); Zapisnik.save(); System.exit(0);
 		}
 		
 		
@@ -135,6 +137,8 @@ public class Biblioteka {
 		glavniMenu();
 		
 	}
+	
+
 	
 	public static int unosIntegera () {
 		
